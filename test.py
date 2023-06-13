@@ -20,6 +20,16 @@ data = [
     }
 ]
 
+error = 0
+
+response = requests.get(url)
+if response.status_code == 200:
+    print("Respuesta del servidor del metodo get:")
+    print(response.text)
+else:
+    print("Se produjo un error al realizar la solicitud GET")
+    error += 1
+
 for data_json in data:
     response = requests.post(url, json=data_json)
     if response.status_code == 200:
@@ -27,3 +37,9 @@ for data_json in data:
         print(response.text)
     else:
         print("Se produjo un error al realizar la solicitud POST de la acción " + data_json["accion"])
+        error += 1
+
+if (error == 0):
+    print("Todos las pruebas corrieron sin errores")
+else:
+    print("Ocurrió un error con " + str(error) + " prueba(s)")
